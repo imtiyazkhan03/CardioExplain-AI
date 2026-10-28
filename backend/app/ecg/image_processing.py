@@ -28,27 +28,40 @@ def extract_printed_telemetry(img_bgr: np.ndarray) -> Dict[str, Any]:
     }
 
     try:
-        import winocr
         h, w = img_bgr.shape[:2]
         # Crop header region (top 45% where standard clinical machines print telemetry)
         header = img_bgr[:int(h * 0.45), :]
         header_up = cv2.resize(header, (w * 3, int(h * 0.45) * 3), interpolation=cv2.INTER_LANCZOS4)
         pil_header = Image.fromarray(cv2.cvtColor(header_up, cv2.COLOR_BGR2RGB))
         
-        # Run OCR
-        try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                import concurrent.futures
-                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-                    res = executor.submit(lambda: asyncio.run(winocr.recognize_pil(pil_header))).result()
-            else:
-                res = asyncio.run(winocr.recognize_pil(pil_header))
-        except Exception:
-            res = asyncio.run(winocr.recognize_pil(pil_header))
+        lines = []
+        text = ""
 
-        lines = [l.text.strip() for l in res.lines if l.text.strip()] if hasattr(res, 'lines') else []
-        text = "\n".join(lines)
+        # Strategy A: Native Windows OCR (winocr)
+        try:
+            import winocr
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    import concurrent.futures
+                    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                        res = executor.submit(lambda: asyncio.run(winocr.recognize_pil(pil_header))).result()
+                else:
+                    res = asyncio.run(winocr.recognize_pil(pil_header))
+            except Exception:
+                res = asyncio.run(winocr.recognize_pil(pil_header))
+
+            lines = [l.text.strip() for l in res.lines if l.text.strip()] if hasattr(res, 'lines') else []
+            text = "\n".join(lines)
+        except Exception:
+            # Strategy B: Cross-platform pytesseract fallback (Linux / Docker / Cloud)
+            try:
+                import pytesseract
+                text = pytesseract.image_to_string(pil_header)
+                lines = [l.strip() for l in text.splitlines() if l.strip()]
+            except Exception:
+                pass
+
         telemetry["ocr_raw_text"] = text
 
         # 1. Direct Regex Search for inline key-values across all lines

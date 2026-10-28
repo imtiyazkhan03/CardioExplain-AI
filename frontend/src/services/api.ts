@@ -1,8 +1,9 @@
 import axios from 'axios';
 import type { AnalysisRecord, WaveformLeadData } from '../types';
 
-
-const API_BASE = '/api';
+const API_BASE = (import.meta as any).env?.VITE_API_URL
+  ? `${(import.meta as any).env.VITE_API_URL.replace(/\/$/, '')}/api`
+  : '/api';
 
 export const ecgApi = {
   getHealth: async () => {

@@ -13,4 +13,5 @@ pytest>=8.0.0
 python-dotenv>=1.0.0
 opencv-python-headless>=4.9.0
 scikit-learn>=1.4.0
-winocr>=0.0.15
+pytesseract>=0.3.10
+winocr>=0.0.15; sys_platform == 'win32'

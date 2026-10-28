@@ -191,3 +191,41 @@ This script:
 - **Zero PII Required:** Does not require, store, or log sensitive patient identifiers.
 - **Local Signal Execution:** All digital filtering and ML inference occur in local memory; no raw biological data is transferred to external third-party services.
 - **Transparent Model Status:** If deep learning or baseline models are not installed, the platform truthfully shows `not_trained` instead of simulating predictions.
+
+---
+
+## 🚀 Cloud Deployment Guide
+
+### Option 1: Render (Recommended - 1-Click Blueprint)
+
+1. Sign in to [Render.com](https://render.com) and link your GitHub account.
+2. Click **New +** -> **Blueprint**.
+3. Select your repository: `https://github.com/imtiyazkhan03/CardioExplain-AI`.
+4. Render will automatically parse [render.yaml](file:///c:/Users/Imtiyaz/Imtiyaz_projects/CardioExplain%20AI/render.yaml) and create:
+   - **`cardioexplain-backend`** (Docker Web Service with OpenCV & Tesseract OCR)
+   - **`cardioexplain-frontend`** (Static React 19 SPA with automatic backend URL binding)
+5. Click **Apply**. Both services will build and deploy automatically on Render's free tier.
+
+---
+
+### Option 2: Railway
+
+1. Sign in to [Railway.app](https://railway.app).
+2. Click **New Project** -> **Deploy from GitHub repo**.
+3. Select `imtiyazkhan03/CardioExplain-AI`.
+4. Railway will automatically detect [railway.json](file:///c:/Users/Imtiyaz/Imtiyaz_projects/CardioExplain%20AI/railway.json) and [backend/Dockerfile](file:///c:/Users/Imtiyaz/Imtiyaz_projects/CardioExplain%20AI/backend/Dockerfile).
+5. Set environment variable `PORT=8000` (or allow Railway to assign dynamically).
+6. To deploy the frontend on Railway: Add a second service pointing to `./frontend` with `npm run build`.
+
+---
+
+### Option 3: Docker Compose (Local Production or VPS)
+
+To deploy with production Nginx routing and FastAPI in a single command:
+
+```bash
+docker-compose up --build -d
+```
+
+- **Frontend:** [http://localhost:3000](http://localhost:3000)
+- **Backend API & Swagger Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
