@@ -13,7 +13,7 @@ import { AboutPage } from './pages/AboutPage';
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900">
+      <div className="flex flex-col min-h-screen bg-[#070b14] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-300">
         <Navbar />
         <main className="flex-1">
           <Routes>

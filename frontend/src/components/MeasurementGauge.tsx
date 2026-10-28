@@ -17,8 +17,8 @@ export const MeasurementGauge: React.FC<Props> = ({
 }) => {
   if (value === null || minRef === undefined || maxRef === undefined) {
     return (
-      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-        <div className="h-full bg-slate-300 w-1/4 rounded-full"></div>
+      <div className="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+        <div className="h-full bg-slate-800 w-1/4 rounded-full"></div>
       </div>
     );
   }
@@ -38,24 +38,24 @@ export const MeasurementGauge: React.FC<Props> = ({
 
   const markerColor =
     status === 'normal'
-      ? 'bg-emerald-500 shadow-emerald-500/50'
+      ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]'
       : status === 'abnormal'
-      ? 'bg-rose-500 shadow-rose-500/50'
-      : 'bg-amber-500 shadow-amber-500/50';
+      ? 'bg-rose-500 shadow-[0_0_8px_#f43f5e]'
+      : 'bg-amber-400 shadow-[0_0_8px_#fbbf24]';
 
   return (
     <div className="w-full space-y-1">
       {/* Gauge track */}
-      <div className="relative w-full h-3 bg-slate-100 rounded-full border border-slate-200/60 overflow-hidden">
+      <div className="relative w-full h-3 bg-slate-900/90 rounded-full border border-slate-800 overflow-hidden">
         {/* Normal Reference Range Zone */}
         <div
-          className="absolute h-full bg-emerald-100/70 border-x border-emerald-300/60"
+          className="absolute h-full bg-emerald-950/60 border-x border-emerald-500/40"
           style={{ left: `${leftPercent}%`, width: `${widthPercent}%` }}
         ></div>
 
         {/* Value Marker Dot */}
         <div
-          className={`absolute top-0 bottom-0 w-2.5 -ml-1.25 rounded-full ${markerColor} shadow-sm border border-white transition-all`}
+          className={`absolute top-0 bottom-0 w-2.5 -ml-1.25 rounded-full ${markerColor} border border-slate-950 transition-all`}
           style={{ left: `${valuePercent}%` }}
         ></div>
       </div>
@@ -63,7 +63,7 @@ export const MeasurementGauge: React.FC<Props> = ({
       {/* Numerical markers beneath */}
       <div className="flex justify-between items-center text-[10px] text-slate-400 font-mono">
         <span>{minRef} {unit}</span>
-        <span className="text-slate-500 font-medium">Ref Range</span>
+        <span className="text-emerald-400/80 font-medium">Safe Window</span>
         <span>{maxRef} {unit}</span>
       </div>
     </div>

@@ -105,21 +105,21 @@ export const UploadPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-[#070b14] min-h-screen">
       <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
           Upload Electrocardiogram (ECG) Recording
         </h1>
-        <p className="text-slate-600 text-sm mt-1">
+        <p className="text-slate-400 text-sm mt-1">
           Supports digital time-series CSV files, digitized waveforms, scanned paper ECG images, and clinical PDF reports.
         </p>
       </div>
 
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+        <div className="mb-6 p-4 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-300 text-xs flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
           <div className="space-y-0.5">
-            <p className="font-bold text-sm">Upload or Processing Rejection</p>
+            <p className="font-bold text-sm text-white">Upload or Processing Rejection</p>
             <p>{errorMessage}</p>
           </div>
         </div>
@@ -137,10 +137,10 @@ export const UploadPage: React.FC = () => {
           onClick={() => fileInputRef.current?.click()}
           className={`relative border-2 border-dashed rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all ${
             isDragging
-              ? 'border-teal-500 bg-teal-50/50'
+              ? 'border-emerald-400 bg-emerald-950/30'
               : selectedFile
-              ? 'border-teal-400 bg-teal-50/20'
-              : 'border-slate-300 hover:border-slate-400 bg-white'
+              ? 'border-emerald-500/60 bg-emerald-950/20 shadow-[0_0_20px_rgba(16,185,129,0.15)]'
+              : 'border-slate-800 hover:border-emerald-500/40 bg-[#0b1120] hover:shadow-[0_0_25px_rgba(16,185,129,0.1)]'
           }`}
         >
           <input
@@ -152,17 +152,17 @@ export const UploadPage: React.FC = () => {
           />
 
           <div className="max-w-md mx-auto space-y-3">
-            <div className="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mx-auto shadow-xs">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-[0_0_15px_rgba(16,185,129,0.25)]">
               <UploadCloud className="w-8 h-8" />
             </div>
 
             {selectedFile ? (
               <div className="space-y-1">
                 <div className="flex items-center justify-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span className="font-bold text-slate-900 text-base">{selectedFile.name}</span>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span className="font-bold text-white text-base">{selectedFile.name}</span>
                 </div>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   Size: {(selectedFile.size / 1024).toFixed(1)} KB &bull; Type: {selectedFile.type || 'ECG File'}
                 </p>
                 <button
@@ -171,17 +171,17 @@ export const UploadPage: React.FC = () => {
                     e.stopPropagation();
                     setSelectedFile(null);
                   }}
-                  className="mt-2 text-xs text-rose-600 hover:underline font-semibold"
+                  className="mt-2 text-xs text-rose-400 hover:text-rose-300 hover:underline font-semibold"
                 >
                   Choose a different file
                 </button>
               </div>
             ) : (
               <>
-                <p className="text-base font-bold text-slate-800">
+                <p className="text-base font-bold text-white">
                   Drag and drop your ECG report or digital file here
                 </p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   or click to browse from your computer (CSV, TXT, PDF, PNG, JPG up to 15MB)
                 </p>
               </>
@@ -190,15 +190,15 @@ export const UploadPage: React.FC = () => {
         </div>
 
         {/* Optional Context & Acquisition Configuration */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-            <Sliders className="w-4 h-4 text-teal-600" />
-            <h2 className="text-sm font-bold text-slate-900">Optional Clinical Context &amp; Signal Parameters</h2>
+        <div className="bg-[#0b1120] rounded-2xl border border-slate-800 p-6 shadow-md space-y-4">
+          <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
+            <Sliders className="w-4 h-4 text-emerald-400" />
+            <h2 className="text-sm font-bold text-white">Optional Clinical Context &amp; Signal Parameters</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                 Patient Age (Years, Optional)
               </label>
               <input
@@ -208,27 +208,27 @@ export const UploadPage: React.FC = () => {
                 value={patientAge}
                 onChange={(e) => setPatientAge(e.target.value)}
                 placeholder="e.g. 54"
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-600"
+                className="w-full px-3 py-2 rounded-lg border border-slate-800 bg-[#070b14] text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                 Biological Sex (Optional)
               </label>
               <select
                 value={patientSex}
                 onChange={(e) => setPatientSex(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-600 bg-white"
+                className="w-full px-3 py-2 rounded-lg border border-slate-800 bg-[#070b14] text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
               >
-                <option value="">Unspecified</option>
-                <option value="male">Male (QTc threshold 450 ms)</option>
-                <option value="female">Female (QTc threshold 460 ms)</option>
+                <option value="" className="bg-[#0b1120] text-slate-300">Unspecified</option>
+                <option value="male" className="bg-[#0b1120] text-slate-300">Male (QTc threshold 450 ms)</option>
+                <option value="female" className="bg-[#0b1120] text-slate-300">Female (QTc threshold 460 ms)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                 Sampling Rate (Hz)
               </label>
               <input
@@ -238,7 +238,7 @@ export const UploadPage: React.FC = () => {
                 value={samplingRate}
                 onChange={(e) => setSamplingRate(e.target.value)}
                 placeholder="500"
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-600"
+                className="w-full px-3 py-2 rounded-lg border border-slate-800 bg-[#070b14] text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
               />
             </div>
           </div>
@@ -248,16 +248,16 @@ export const UploadPage: React.FC = () => {
         </div>
 
         {/* Consent and Intended-Use Notice */}
-        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+        <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 flex items-start gap-3">
           <input
             type="checkbox"
             id="consent-check"
             checked={consentConfirmed}
             onChange={(e) => setConsentConfirmed(e.target.checked)}
-            className="mt-1 w-4 h-4 rounded text-teal-600 focus:ring-teal-500 border-slate-300 cursor-pointer"
+            className="mt-1 w-4 h-4 rounded text-emerald-500 focus:ring-emerald-400 border-slate-700 bg-slate-950 cursor-pointer"
           />
-          <label htmlFor="consent-check" className="text-xs text-slate-700 cursor-pointer leading-relaxed">
-            <strong>Consent &amp; Intended-Use Acknowledgment:</strong> I understand that CardioExplain AI is an investigational decision-support and educational tool. It does not replace a clinical cardiologist, diagnose acute conditions definitively, or triage emergencies. I confirm that any uploaded data complies with applicable research privacy guidelines.
+          <label htmlFor="consent-check" className="text-xs text-slate-300 cursor-pointer leading-relaxed">
+            <strong className="text-white">Consent &amp; Intended-Use Acknowledgment:</strong> I understand that CardioExplain AI is an investigational decision-support and educational tool. It does not replace a clinical cardiologist, diagnose acute conditions definitively, or triage emergencies. I confirm that any uploaded data complies with applicable research privacy guidelines.
           </label>
         </div>
 
@@ -265,11 +265,11 @@ export const UploadPage: React.FC = () => {
         <button
           type="submit"
           disabled={loading || !selectedFile || !consentConfirmed}
-          className="w-full py-3.5 px-6 rounded-xl bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 text-white font-semibold text-base shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+          className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-slate-950 font-bold text-base shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
         >
           {loading ? (
             <>
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></div>
               <span>Processing Waveform &amp; Classifying...</span>
             </>
           ) : (
@@ -282,14 +282,14 @@ export const UploadPage: React.FC = () => {
       </form>
 
       {/* Alternative Quick-Test Banner */}
-      <div className="mt-12 pt-8 border-t border-slate-200">
+      <div className="mt-12 pt-8 border-t border-slate-800">
         <div className="flex items-center gap-2 mb-3">
-          <Info className="w-4 h-4 text-teal-600" />
-          <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+          <Info className="w-4 h-4 text-emerald-400" />
+          <h3 className="text-xs font-bold text-white uppercase tracking-wider">
             Reviewer Quick Testing Mode (No File Needed)
           </h3>
         </div>
-        <p className="text-xs text-slate-500 mb-4">
+        <p className="text-xs text-slate-400 mb-4">
           Click any preset case below to immediately load a benchmark synthetic signal:
         </p>
 
@@ -305,7 +305,7 @@ export const UploadPage: React.FC = () => {
               key={item.id}
               onClick={() => handleLaunchPresetDemo(item.id)}
               disabled={loading}
-              className="p-2.5 rounded-lg border border-slate-200 hover:border-teal-500 hover:bg-teal-50/50 bg-white text-slate-700 text-xs font-medium text-center transition-all shadow-xs"
+              className="p-2.5 rounded-lg border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800/80 bg-slate-900 text-slate-300 hover:text-emerald-300 text-xs font-medium text-center transition-all shadow-xs"
             >
               {item.title}
             </button>
